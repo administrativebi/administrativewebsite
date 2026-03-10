@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const knowledgeBase = fs.readFileSync(knowledgePath, "utf8");
 
     // 2. Configurar o Modelo
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `
       Você é o especialista técnico da empresa Administrative. 
