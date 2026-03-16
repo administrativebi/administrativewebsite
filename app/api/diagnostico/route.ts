@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabaseClient';
 import { generateInitialAIResponse } from '@/lib/aiEngine';
+import { sendEmail } from '@/lib/resend';
 
 const QUESTIONS_DATA = [
   { 
@@ -142,6 +143,21 @@ export async function POST(req: Request) {
       .single();
 
     if (error) console.error("Supabase Error saving diagnostic:", error);
+
+    // ENVIO DE E-MAIL NOTIFICANDO NOVO DIAGNÓSTICO
+    await sendEmail({
+      subject: `🚨 Novo Diagnóstico IER: ${name} (${ierScore}/100)`,
+      html: `
+        <h2>Novo Lead de Diagnóstico IER</h2>
+        <p><strong>Restaurante:</strong> ${name}</p>
+        <p><strong>Cidade:</strong> ${city}</p>
+        <p><strong>Score IER:</strong> ${ierScore}/100</p>
+        <p><strong>Classificação:</strong> ${classification}</p>
+        <p><strong>Pior Dimensão:</strong> ${weakestDimension.name} (${weakestDimension.score}%)</p>
+        <hr />
+        <p><small>Enviado automaticamente pelo sistema Administrative via Resend.</small></p>
+      `,
+    });
 
     // Cria a sessão de chat vinculada ao diagnóstico
     let sessionId = null;
