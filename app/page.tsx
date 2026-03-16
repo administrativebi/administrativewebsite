@@ -188,8 +188,8 @@ export default function AdministrativeLanding() {
           <div>
             <span className="text-red-500 font-mono text-[10px] uppercase tracking-widest mb-4 block">A Causa</span>
             <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter mb-6 leading-[0.9]">
-              Falta de clientes não quebra.<br />
-              <span className="text-red-500">Falta de performance sim.</span>
+              Clientes podem até vir.<br />
+              <span className="text-red-500">Sem performance, o resultado não vem.</span>
             </h2>
             <div className="space-y-4 text-gray-400 text-sm">
               <p>Tem proprietário achando que o negócio é ruim, ja tentou e continua com estes sintomas:</p>
@@ -212,40 +212,28 @@ export default function AdministrativeLanding() {
             <div className="absolute top-0 right-0 p-6 opacity-5">
               <BarChart3 className="w-16 h-16" />
             </div>
-            <h3 className="text-xl font-black uppercase mb-4 tracking-tighter">A Ilusão do Dono</h3>
+            <h3 className="text-xl font-black uppercase mb-4 tracking-tighter">Sua operação pode estar perdendo eficiência sem que você perceba.</h3>
             <div className="text-gray-400 text-[11px] mb-6 leading-relaxed italic uppercase tracking-wider space-y-4 whitespace-pre-line">
               {`É uma ilusão acreditar que os restaurantes de amanhã funcionarão como os de ontem.
-
 As pessoas não vão parar de comer fora.
 Mas a forma de fazer restaurante mudou.
-
 Durante anos, o mercado acreditou que diferenciação vinha de:
-
 experiência,
 ambiente instagramável,
 embalagens criativas,
 técnicas de atendimento,
 gourmetização de pratos.
-
 Hoje tudo isso está acessível para qualquer restaurante.
-
 Não diferencia mais.
-
 Controle de CMV, treinamentos, POPs, checklists e processos também deixaram de ser diferenciais.
 Esses conceitos chegaram a todos os nichos porque a necessidade de gestão se tornou inevitável.
-
 Se você ainda está tentando aprender isso agora, na prática você está apenas correndo atrás do restante do mercado.
-
 O problema é outro.
-
 Sem gestão de performance, sua margem desaparece silenciosamente:
-
 em um quadro de funcionários maior do que o necessário,
 em um desperdício que passou despercebido este mês,
 em um estoque vencido por falta de PVPS,
-ou em processos que existem no papel mas não funcionam no dia a dia.
-
-`}
+ou em processos que existem no papel mas não funcionam no dia a dia.`}
             </div>
             <div className="pt-4 border-t border-white/5">
               <p className="text-sm font-black uppercase tracking-tighter text-red-500">Quem cuida da performance cresce.

@@ -3,23 +3,95 @@ import { supabase } from '@/lib/supabaseClient';
 import { generateInitialAIResponse } from '@/lib/aiEngine';
 
 const QUESTIONS_DATA = [
-  { dim: 'Gestão Financeira', questions: ['Existe DRE estruturada?'] },
-  { dim: 'Controle de Custos', questions: ['CMV é calculado regularmente?'] },
-  { dim: 'Processos Operacionais', questions: ['Existe padrão de abertura e fechamento?'] },
-  { dim: 'Gestão de Pessoas', questions: ['Existe treinamento estruturado?'] },
-  { dim: 'Gestão Comercial', questions: ['Ticket médio é acompanhado?'] },
-  { dim: 'Experiência do Cliente', questions: ['Existe padrão de atendimento?'] },
-  { dim: 'Inteligência de Dados', questions: ['Existe dashboard ou BI?'] },
-  { dim: 'Liderança', questions: ['O dono possui rotina de gestão semanal?'] }
+  { 
+    dim: 'Gestão Financeira', 
+    questions: [
+      'Existe DRE estruturada e mensal?',
+      'Fluxo de caixa é acompanhado diariamente?',
+      'Existe meta de lucratividade líquida definida?',
+      'Contas a pagar e receber são conciliadas diariamente?',
+      'Existe separação total entre conta física e jurídica?'
+    ] 
+  },
+  { 
+    dim: 'Controle de Custos', 
+    questions: [
+      'CMV é calculado regularmente com base em inventário?',
+      'Fichas técnicas estão atualizadas e são seguidas?',
+      'Existe controle de desperdício e quebras registrado?',
+      'Compras são feitas com base em cotações e PVPS?',
+      'Margem de contribuição por produto é conhecida?'
+    ] 
+  },
+  { 
+    dim: 'Processos Operacionais', 
+    questions: [
+      'Existe padrão (POP) de abertura e fechamento?',
+      'Checklists operacionais são aplicados e auditados?',
+      'O fluxo de produção da cozinha é otimizado (Lean)?',
+      'Existe padrão de recebimento de mercadorias?',
+      'A manutenção preventiva de equipamentos é realizada?'
+    ] 
+  },
+  { 
+    dim: 'Gestão de Pessoas', 
+    questions: [
+      'Existe treinamento estruturado para novos colaboradores?',
+      'As funções e responsabilidades estão documentadas (Job Description)?',
+      'Existe feedback formal e rotina de alinhamento com a equipe?',
+      'O turnover da operação é medido e controlado?',
+      'Existe política de incentivos baseada em metas?'
+    ] 
+  },
+  { 
+    dim: 'Gestão Comercial', 
+    questions: [
+      'O ticket médio é acompanhado e existem metas de aumento?',
+      'Existe estratégia de engenharia de cardápio (Menu Engineering)?',
+      'As campanhas de marketing são medidas por ROI real?',
+      'Existe base de clientes (CRM) para ações de fidelização?',
+      'A presença digital (Google/Redes) é gerida estrategicamente?'
+    ] 
+  },
+  { 
+    dim: 'Experiência do Cliente', 
+    questions: [
+      'Existe um padrão de atendimento (script/etapas) definido?',
+      'O tempo de espera/entrega é monitorado constantemente?',
+      'Existe pesquisa de satisfação (NPS ou similar) ativa?',
+      'O ambiente (limpeza, som, luz) é auditado regularmente?',
+      'Existe protocolo de resolução de reclamações em tempo real?'
+    ] 
+  },
+  { 
+    dim: 'Inteligência de Dados', 
+    questions: [
+      'Existe dashboard ou BI para acompanhamento de KPIs?',
+      'Os indicadores de performance (vendas, custos, pessoas) são cruzados?',
+      'Existe análise de concorrência e benchmark de mercado?',
+      'Decisões de investimento são baseadas em dados históricos?',
+      'O estoque é gerido por sistema integrado (ERP)?'
+    ] 
+  },
+  { 
+    dim: 'Liderança', 
+    questions: [
+      'O dono possui rotina de gestão semanal fora da operação?',
+      'Existem rituais de cultura e valores com toda a equipe?',
+      'O plano estratégico do negócio é revisado trimestralmente?',
+      'A sucessão ou delegabilidade operacional está em construção?',
+      'O líder foca mais em estratégia do que em "apagar incêndios"?'
+    ] 
+  }
 ];
 
 export async function POST(req: Request) {
   try {
     const { name, city, answers } = await req.json();
 
-    // 1. Lógica de Cálculo IER (Máximo 16 pontos agora)
+    // 1. Lógica de Cálculo IER (Máximo 80 pontos agora: 40 questões * 2 pts)
     const totalPoints = answers.reduce((acc: number, val: number) => acc + (val >= 0 ? val : 0), 0);
-    const ierScore = Math.round((totalPoints / 16) * 100);
+    const ierScore = Math.round((totalPoints / 80) * 100);
     
     let classification = '';
     if (ierScore <= 25) classification = 'Crítico';
@@ -27,21 +99,24 @@ export async function POST(req: Request) {
     else if (ierScore <= 75) classification = 'Gerenciado';
     else classification = 'Alta Eficiência';
 
-    // 2. Cálculo das Dimensões
-    const dimensions = QUESTIONS_DATA.map((dimData, idx) => {
-      const val = answers[idx];
+    // 2. Cálculo das Dimensões (5 questões por dimensão)
+    const dimensions = QUESTIONS_DATA.map((dimData, dimIdx) => {
+      const startIndex = dimIdx * 5;
+      const dimAnswers = answers.slice(startIndex, startIndex + 5);
+      const dimPoints = dimAnswers.reduce((acc: number, val: number) => acc + (val >= 0 ? val : 0), 0);
       return {
         name: dimData.dim,
-        score: Math.round((val / 2) * 100)
+        score: Math.round((dimPoints / 10) * 100) // 5 questões * 2 pts = 10 pts max por dim
       };
     });
 
     const weakestDimension = [...dimensions].sort((a, b) => a.score - b.score)[0];
 
     const zeroAnswers: string[] = [];
+    const flatQuestions = QUESTIONS_DATA.flatMap(d => d.questions);
     answers.forEach((val: number, idx: number) => {
       if (val === 0) {
-        zeroAnswers.push(QUESTIONS_DATA[idx].questions[0]);
+        zeroAnswers.push(flatQuestions[idx]);
       }
     });
 

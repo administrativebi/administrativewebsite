@@ -37,19 +37,29 @@ export async function POST(req: Request) {
     };
 
     if (!process.env.EMAIL_PASS) {
-      console.warn('EMAIL_PASS não configurado no .env.local. O e-mail não será enviado, mas o log será gerado.');
-      console.log('Dados do Contato:', { empresa, nome, whatsapp, mensagem });
+      console.warn('CRITICAL: EMAIL_PASS não configurado no .env.local. O e-mail não será enviado. Entrando em modo simulação.');
+      console.log('DADOS QUE SERIAM ENVIADOS:', { empresa, nome, whatsapp, mensagem });
       return NextResponse.json({ 
-        message: 'Contato recebido (modo simulação)', 
+        message: 'Contato recebido (modo simulação - EMAIL_PASS ausente)', 
         data: { empresa, nome, whatsapp, mensagem } 
       }, { status: 200 });
     }
 
-    await transporter.sendMail(mailOptions);
-
-    return NextResponse.json({ message: 'E-mail enviado com sucesso' }, { status: 200 });
-  } catch (error) {
-    console.error('Erro ao enviar e-mail:', error);
-    return NextResponse.json({ error: 'Erro ao processar o contato' }, { status: 500 });
+    try {
+      console.log(`Tentando enviar e-mail para admnistrativebi@gmail.com via Gmail SMTP...`);
+      const info = await transporter.sendMail(mailOptions);
+      console.log('E-mail enviado com sucesso! MessageId:', info.messageId);
+      return NextResponse.json({ message: 'E-mail enviado com sucesso', messageId: info.messageId }, { status: 200 });
+    } catch (sendError: any) {
+      console.error('ERRO SMTP AO ENVIAR E-MAIL:', sendError);
+      return NextResponse.json({ 
+        error: 'Erro no servidor de e-mail ao enviar', 
+        details: sendError.message,
+        code: sendError.code 
+      }, { status: 500 });
+    }
+  } catch (error: any) {
+    console.error('ERRO FATAL NA ROTA DE CONTATO:', error);
+    return NextResponse.json({ error: 'Erro interno ao processar o contato', details: error.message }, { status: 500 });
   }
 }

@@ -6,14 +6,86 @@ import { ChevronRight, ArrowRight, X, BarChart3, TrendingUp, AlertTriangle, Shie
 import ReactMarkdown from 'react-markdown';
 
 const QUESTIONS_DATA = [
-  { dim: 'Gestão Financeira', questions: ['Existe DRE estruturada?'] },
-  { dim: 'Controle de Custos', questions: ['CMV é calculado regularmente?'] },
-  { dim: 'Processos Operacionais', questions: ['Existe padrão de abertura e fechamento?'] },
-  { dim: 'Gestão de Pessoas', questions: ['Existe treinamento estruturado?'] },
-  { dim: 'Gestão Comercial', questions: ['Ticket médio é acompanhado?'] },
-  { dim: 'Experiência do Cliente', questions: ['Existe padrão de atendimento?'] },
-  { dim: 'Inteligência de Dados', questions: ['Existe dashboard ou BI?'] },
-  { dim: 'Liderança', questions: ['O dono possui rotina de gestão semanal?'] }
+  { 
+    dim: 'Gestão Financeira', 
+    questions: [
+      'Existe DRE estruturada e mensal?',
+      'Fluxo de caixa é acompanhado diariamente?',
+      'Existe meta de lucratividade líquida definida?',
+      'Contas a pagar e receber são conciliadas diariamente?',
+      'Existe separação total entre conta física e jurídica?'
+    ] 
+  },
+  { 
+    dim: 'Controle de Custos', 
+    questions: [
+      'CMV é calculado regularmente com base em inventário?',
+      'Fichas técnicas estão atualizadas e são seguidas?',
+      'Existe controle de desperdício e quebras registrado?',
+      'Compras são feitas com base em cotações e PVPS?',
+      'Margem de contribuição por produto é conhecida?'
+    ] 
+  },
+  { 
+    dim: 'Processos Operacionais', 
+    questions: [
+      'Existe padrão (POP) de abertura e fechamento?',
+      'Checklists operacionais são aplicados e auditados?',
+      'O fluxo de produção da cozinha é otimizado (Lean)?',
+      'Existe padrão de recebimento de mercadorias?',
+      'A manutenção preventiva de equipamentos é realizada?'
+    ] 
+  },
+  { 
+    dim: 'Gestão de Pessoas', 
+    questions: [
+      'Existe treinamento estruturado para novos colaboradores?',
+      'As funções e responsabilidades estão documentadas (Job Description)?',
+      'Existe feedback formal e rotina de alinhamento com a equipe?',
+      'O turnover da operação é medido e controlado?',
+      'Existe política de incentivos baseada em metas?'
+    ] 
+  },
+  { 
+    dim: 'Gestão Comercial', 
+    questions: [
+      'O ticket médio é acompanhado e existem metas de aumento?',
+      'Existe estratégia de engenharia de cardápio (Menu Engineering)?',
+      'As campanhas de marketing são medidas por ROI real?',
+      'Existe base de clientes (CRM) para ações de fidelização?',
+      'A presença digital (Google/Redes) é gerida estrategicamente?'
+    ] 
+  },
+  { 
+    dim: 'Experiência do Cliente', 
+    questions: [
+      'Existe um padrão de atendimento (script/etapas) definido?',
+      'O tempo de espera/entrega é monitorado constantemente?',
+      'Existe pesquisa de satisfação (NPS ou similar) ativa?',
+      'O ambiente (limpeza, som, luz) é auditado regularmente?',
+      'Existe protocolo de resolução de reclamações em tempo real?'
+    ] 
+  },
+  { 
+    dim: 'Inteligência de Dados', 
+    questions: [
+      'Existe dashboard ou BI para acompanhamento de KPIs?',
+      'Os indicadores de performance (vendas, custos, pessoas) são cruzados?',
+      'Existe análise de concorrência e benchmark de mercado?',
+      'Decisões de investimento são baseadas em dados históricos?',
+      'O estoque é gerido por sistema integrado (ERP) संतुलित?'
+    ] 
+  },
+  { 
+    dim: 'Liderança', 
+    questions: [
+      'O dono possui rotina de gestão semanal fora da operação?',
+      'Existem rituais de cultura e valores com toda a equipe?',
+      'O plano estratégico do negócio é revisado trimestralmente?',
+      'A sucessão ou delegabilidade operacional está em construção?',
+      'O líder foca mais em estratégia do que em "apagar incêndios"?'
+    ] 
+  }
 ];
 
 export default function IERSection() {
@@ -21,9 +93,9 @@ export default function IERSection() {
   const [currentDimIndex, setCurrentDimIndex] = useState(-1);
   const [restaurantName, setRestaurantName] = useState('');
   const [restaurantCity, setRestaurantCity] = useState('');
-  const [answers, setAnswers] = useState<number[]>(Array(8).fill(-1));
+  const [answers, setAnswers] = useState<number[]>(Array(40).fill(-1));
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // Real stats data
   const [stats, setStats] = useState({
     general: 48,
@@ -51,8 +123,8 @@ export default function IERSection() {
   const [viewState, setViewState] = useState<'quiz' | 'report' | 'chat'>('quiz');
   const [reportText, setReportText] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
-  
-  const [chatMessages, setChatMessages] = useState<{role: 'user'|'ai', text: string}[]>([]);
+
+  const [chatMessages, setChatMessages] = useState<{ role: 'user' | 'ai', text: string }[]>([]);
   const [chatInput, setChatInput] = useState('');
   const [isChatLoading, setIsChatLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -73,7 +145,7 @@ export default function IERSection() {
 
   const calculateUserScore = () => {
     const totalPoints = answers.reduce((acc, val) => acc + (val >= 0 ? val : 0), 0);
-    return Math.round((totalPoints / 16) * 100);
+    return Math.round((totalPoints / 80) * 100);
   };
 
   const handleNext = async () => {
@@ -98,7 +170,7 @@ export default function IERSection() {
           })
         });
         const data = await response.json();
-        
+
         if (data.success) {
           setReportText(data.report);
           setSessionId(data.sessionId);
@@ -121,7 +193,7 @@ export default function IERSection() {
 
   const handleSendMessage = async () => {
     if (!chatInput.trim() || isChatLoading) return;
-    
+
     const userMsg = chatInput.trim();
     setChatMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setChatInput('');
@@ -144,40 +216,44 @@ export default function IERSection() {
   };
 
   const startOver = () => {
-    setIsQuizOpen(true); 
-    setViewState('quiz'); 
-    setCurrentDimIndex(-1); 
-    setAnswers(Array(8).fill(-1)); 
-    setRestaurantName(''); 
-    setRestaurantCity(''); 
+    setIsQuizOpen(true);
+    setViewState('quiz');
+    setCurrentDimIndex(-1);
+    setAnswers(Array(40).fill(-1));
+    setRestaurantName('');
+    setRestaurantCity('');
     setReportText(null);
     setChatMessages([]);
   }
 
   const currentDim = currentDimIndex >= 0 ? QUESTIONS_DATA[currentDimIndex] : null;
-  const startIndex = currentDimIndex; // 1 per dim, so index is same as currentDimIndex
-  const allAnsweredInDim = currentDimIndex >= 0 ? answers[currentDimIndex] !== -1 : false;
+  const startIndex = currentDimIndex * 5; 
+  const allAnsweredInDim = currentDimIndex >= 0 
+    ? answers.slice(startIndex, startIndex + 5).every(a => a !== -1) 
+    : false;
 
   return (
     <section className="py-24 px-4 bg-[#050505] relative overflow-hidden border-t border-b border-white/5">
       <div className="absolute inset-0 bg-[#0A0A0A] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-[#0A0A0A] to-[#050505]"></div>
-      
+
       <div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        
+
         {/* Left Side: Provocative Copy */}
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-mono uppercase tracking-widest mb-6">
-            <AlertTriangle className="w-4 h-4" /> Descubra o nível de eficiência da sua operação
+            <AlertTriangle className="w-4 h-4" /> Descubra o potencial de eficiência de seu Restaurante
           </div>
           <h2 className="text-4xl md:text-6xl font-black uppercase mb-6 leading-tight text-white tracking-tighter">
             Sua operação está <span className="text-red-500">morrendo</span> em silêncio?
           </h2>
           <p className="text-xl text-gray-400 mb-8 border-l-2 border-red-500/50 pl-4">
             A média de eficiência dos restaurantes no Brasil é de apenas <strong className="text-white">{stats.general}/100</strong>.
-            Acreditam que lucram, mas não sabem quanto, vendem, mas não veem dinheiro. Está na performance do time que não evolui.
+            Muitos restaurantes operam com boa movimentação, mas sem visibilidade clara sobre a real eficiência do negócio. Vendem bem, porém não conseguem enxergar com precisão margens, produtividade do time e eficiência dos processos. Sem ferramentas de gestão, indicadores e rituais de acompanhamento, o potencial de performance da operação fica limitado.
+            Decisões passam a ser tomadas mais pela urgência do dia a dia do que por dados confiáveis. Quando fatores críticos do negócio não são monitorados, o restaurante deixa de explorar aquilo que poderia ser seu maior diferencial competitivo.
+            Para revelar essa realidade, criamos um diagnóstico com 40 perguntas organizadas em 8 pilares da gestão, capaz de mostrar com clareza os pontos que sustentam — ou travam — o crescimento da sua operação
           </p>
-          
-          <button 
+
+          <button
             onClick={startOver}
             className="px-8 py-4 bg-white text-black hover:bg-gray-200 rounded-sm font-bold text-sm uppercase tracking-widest transition-all flex items-center gap-3 group"
           >
@@ -190,7 +266,7 @@ export default function IERSection() {
           <div className="absolute top-0 right-0 p-4 opacity-5">
             <BarChart3 className="w-32 h-32" />
           </div>
-          
+
           <div className="mb-8">
             <h3 className="text-sm text-gray-400 font-mono uppercase tracking-widest">Índice Geral do Projeto (IER)</h3>
             <div className="text-5xl font-black text-blue-500 tracking-tighter mt-2">{stats.general} <span className="text-xl text-gray-500 font-normal">/ 100</span></div>
@@ -205,7 +281,7 @@ export default function IERSection() {
                   <span className={marketDims[idx] < 50 ? 'text-red-400' : 'text-blue-400'}>{marketDims[idx]}</span>
                 </div>
                 <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
-                  <motion.div 
+                  <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: `${marketDims[idx]}%` }}
                     transition={{ duration: 1, delay: idx * 0.1 }}
@@ -222,13 +298,13 @@ export default function IERSection() {
       <AnimatePresence>
         {isQuizOpen && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-black/90 backdrop-blur-xl"
             />
-            
+
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -243,22 +319,22 @@ export default function IERSection() {
               {viewState === 'quiz' && (
                 <>
                   <div className="mb-8 border-b border-white/10 pb-6">
-                     <div className="flex justify-between items-end mb-4">
-                       <div>
-                         <span className="text-blue-500 font-mono text-xs uppercase tracking-widest block mb-1">
-                           {currentDimIndex === -1 ? 'Identificação' : `Dimensão ${currentDimIndex + 1}/8`}
-                         </span>
-                         <h3 className="text-3xl font-black uppercase text-white tracking-tighter">
-                           {currentDimIndex === -1 ? 'Sua Operação' : currentDim?.dim}
-                         </h3>
-                       </div>
-                       <div className="text-gray-500 font-mono text-sm">
-                         {currentDimIndex === -1 ? 0 : Math.round(((currentDimIndex) / 8) * 100)}% concluído
-                       </div>
-                     </div>
-                     <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden">
-                        <div className="h-full bg-blue-500 transition-all duration-300" style={{ width: `${currentDimIndex === -1 ? 0 : ((currentDimIndex) / 8) * 100}%` }} />
-                     </div>
+                    <div className="flex justify-between items-end mb-4">
+                      <div>
+                        <span className="text-blue-500 font-mono text-xs uppercase tracking-widest block mb-1">
+                          {currentDimIndex === -1 ? 'Identificação' : `Dimensão ${currentDimIndex + 1}/8`}
+                        </span>
+                        <h3 className="text-3xl font-black uppercase text-white tracking-tighter">
+                          {currentDimIndex === -1 ? 'Sua Operação' : currentDim?.dim}
+                        </h3>
+                      </div>
+                      <div className="text-gray-500 font-mono text-sm">
+                        {currentDimIndex === -1 ? 0 : Math.round(((currentDimIndex) / 8) * 100)}% concluído
+                      </div>
+                    </div>
+                    <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                      <div className="h-full bg-blue-500 transition-all duration-300" style={{ width: `${currentDimIndex === -1 ? 0 : ((currentDimIndex) / 8) * 100}%` }} />
+                    </div>
                   </div>
 
                   <div className="space-y-6 flex-1">
@@ -267,8 +343,8 @@ export default function IERSection() {
                         <p className="text-gray-400 font-mono text-xs uppercase tracking-widest">Para uma análise personalizada, informe os dados da sua operação:</p>
                         <div>
                           <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Nome do Restaurante</label>
-                          <input 
-                            type="text" 
+                          <input
+                            type="text"
                             value={restaurantName}
                             onChange={(e) => setRestaurantName(e.target.value)}
                             placeholder="Ex: Cantina do Renan"
@@ -277,8 +353,8 @@ export default function IERSection() {
                         </div>
                         <div>
                           <label className="block text-xs font-bold uppercase text-gray-500 mb-2">Cidade</label>
-                          <input 
-                            type="text" 
+                          <input
+                            type="text"
                             value={restaurantCity}
                             onChange={(e) => setRestaurantCity(e.target.value)}
                             placeholder="Ex: Balneário Camboriú, SC"
@@ -290,24 +366,24 @@ export default function IERSection() {
                       currentDim?.questions.map((q, i) => {
                         const qAbsoluteIndex = startIndex + i;
                         const val = answers[qAbsoluteIndex];
-                        
+
                         return (
                           <div key={q} className="bg-[#111] p-4 rounded-xl border border-white/5">
-                            <p className="text-gray-200 font-medium mb-4">{i+1}. {q}</p>
+                            <p className="text-gray-200 font-medium mb-4">{i + 1}. {q}</p>
                             <div className="grid grid-cols-3 gap-2">
-                              <button 
+                              <button
                                 onClick={() => handleAnswer(qAbsoluteIndex, 0)}
                                 className={`py-2 px-2 text-xs font-bold uppercase rounded-md transition-all border ${val === 0 ? 'bg-red-500/20 border-red-500 text-red-400' : 'bg-white/5 border-transparent text-gray-500 hover:bg-white/10'}`}
                               >
                                 Não existe
                               </button>
-                              <button 
+                              <button
                                 onClick={() => handleAnswer(qAbsoluteIndex, 1)}
                                 className={`py-2 px-2 text-xs font-bold uppercase rounded-md transition-all border ${val === 1 ? 'bg-yellow-500/20 border-yellow-500 text-yellow-400' : 'bg-white/5 border-transparent text-gray-500 hover:bg-white/10'}`}
                               >
                                 Parcial
                               </button>
-                              <button 
+                              <button
                                 onClick={() => handleAnswer(qAbsoluteIndex, 2)}
                                 className={`py-2 px-2 text-xs font-bold uppercase rounded-md transition-all border ${val === 2 ? 'bg-green-500/20 border-green-500 text-green-400' : 'bg-white/5 border-transparent text-gray-500 hover:bg-white/10'}`}
                               >
@@ -321,19 +397,19 @@ export default function IERSection() {
                   </div>
 
                   <div className="mt-8 flex justify-between items-center pt-6 border-t border-white/10">
-                    <button 
+                    <button
                       onClick={() => setCurrentDimIndex(prev => prev - 1)}
                       disabled={currentDimIndex === -1}
                       className="px-6 py-3 text-gray-500 hover:text-white uppercase font-bold text-xs disabled:opacity-30 transition-colors"
                     >
                       Voltar
                     </button>
-                    <button 
+                    <button
                       onClick={handleNext}
                       disabled={(currentDimIndex === -1 && (!restaurantName || !restaurantCity)) || (currentDimIndex >= 0 && !allAnsweredInDim) || isSubmitting}
                       className="px-8 py-3 bg-blue-600 hover:bg-blue-500 disabled:bg-gray-800 disabled:text-gray-500 text-white rounded-md uppercase font-bold text-xs flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(37,99,235,0.3)]"
                     >
-                      {isSubmitting ? 'Calculando...' : currentDimIndex === 7 ? 'Finalizar Diagnóstico' : 'Próxima'} 
+                      {isSubmitting ? 'Calculando...' : currentDimIndex === 7 ? 'Finalizar Diagnóstico' : 'Próxima'}
                       {!isSubmitting && <ChevronRight className="w-4 h-4" />}
                     </button>
                   </div>
@@ -352,12 +428,12 @@ export default function IERSection() {
                       </h3>
                     </div>
                   </div>
-                  
+
                   <div className="w-full bg-[#111] border border-white/10 rounded-xl p-8 mb-8 overflow-y-auto flex-1 prose prose-invert prose-blue max-w-none">
-                     <ReactMarkdown>{reportText || ''}</ReactMarkdown>
+                    <ReactMarkdown>{reportText || ''}</ReactMarkdown>
                   </div>
-                  
-                  <button 
+
+                  <button
                     onClick={() => setViewState('chat')}
                     className="w-full py-4 bg-white hover:bg-gray-200 text-black font-black uppercase text-sm rounded-md transition-all flex justify-center items-center gap-2"
                   >
@@ -368,8 +444,9 @@ export default function IERSection() {
 
               {/* VIEW: CHAT */}
               {viewState === 'chat' && (
-                 <div className="flex flex-col h-[70vh]">
-                    <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div className="flex flex-col h-[70vh]">
+                  <div className="flex items-center justify-between gap-3 mb-6 pb-4 border-b border-white/10">
+                    <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30">
                         <TrendingUp className="w-5 h-5 text-blue-500" />
                       </div>
@@ -378,48 +455,56 @@ export default function IERSection() {
                         <span className="text-xs text-blue-400 font-mono">Estrategista de Performance</span>
                       </div>
                     </div>
-                    
-                    <div className="flex-1 overflow-y-auto space-y-6 scrollbar-hide pr-2">
-                      {chatMessages.map((msg, i) => (
-                        <div key={i} className={`flex ${msg.role === 'ai' ? 'justify-start' : 'justify-end'}`}>
-                          <div className={`max-w-[85%] rounded-2xl p-5 ${
-                            msg.role === 'ai' 
-                              ? 'bg-[#111] border border-white/5 text-gray-300' 
-                              : 'bg-blue-600 text-white'
-                          }`}>
-                            <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
-                          </div>
-                        </div>
-                      ))}
-                      {isChatLoading && (
-                        <div className="flex justify-start">
-                          <div className="bg-[#111] border border-white/5 p-4 rounded-2xl flex gap-3 items-center">
-                            <Loader2 className="w-5 h-5 animate-spin text-blue-500" /> 
-                            <span className="text-gray-400 text-xs font-mono uppercase">Processando...</span>
-                          </div>
-                        </div>
-                      )}
-                      <div ref={chatEndRef} />
-                    </div>
+                    <a
+                      href="https://wa.me/5547999255801"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded font-bold text-[10px] uppercase tracking-widest transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]"
+                    >
+                      Fale com um Consultor
+                    </a>
+                  </div>
 
-                    <div className="pt-4 mt-4 border-t border-white/10 flex gap-2">
-                      <input 
-                        type="text" 
-                        value={chatInput}
-                        onChange={(e) => setChatInput(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                        placeholder="Faça uma pergunta sobre sua operação..." 
-                        className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-colors text-white"
-                      />
-                      <button 
-                        onClick={handleSendMessage}
-                        disabled={!chatInput.trim() || isChatLoading}
-                        className="px-6 bg-blue-600 text-white rounded-xl hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                      >
-                        <Send className="w-5 h-5" />
-                      </button>
-                    </div>
-                 </div>
+                  <div className="flex-1 overflow-y-auto space-y-6 scrollbar-hide pr-2">
+                    {chatMessages.map((msg, i) => (
+                      <div key={i} className={`flex ${msg.role === 'ai' ? 'justify-start' : 'justify-end'}`}>
+                        <div className={`max-w-[85%] rounded-2xl p-5 ${msg.role === 'ai'
+                          ? 'bg-[#111] border border-white/5 text-gray-300'
+                          : 'bg-blue-600 text-white'
+                          }`}>
+                          <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                        </div>
+                      </div>
+                    ))}
+                    {isChatLoading && (
+                      <div className="flex justify-start">
+                        <div className="bg-[#111] border border-white/5 p-4 rounded-2xl flex gap-3 items-center">
+                          <Loader2 className="w-5 h-5 animate-spin text-blue-500" />
+                          <span className="text-gray-400 text-xs font-mono uppercase">Processando...</span>
+                        </div>
+                      </div>
+                    )}
+                    <div ref={chatEndRef} />
+                  </div>
+
+                  <div className="pt-4 mt-4 border-t border-white/10 flex gap-2">
+                    <input
+                      type="text"
+                      value={chatInput}
+                      onChange={(e) => setChatInput(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                      placeholder="Faça uma pergunta sobre sua operação..."
+                      className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-colors text-white"
+                    />
+                    <button
+                      onClick={handleSendMessage}
+                      disabled={!chatInput.trim() || isChatLoading}
+                      className="px-6 bg-blue-600 text-white rounded-xl hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <Send className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
               )}
 
             </motion.div>
