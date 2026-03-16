@@ -155,11 +155,10 @@ export default function AdministrativeLanding() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white uppercase leading-[0.9] mb-6">
-              Seu restaurante não precisa de mais esforço.<br />
-              <span className="text-blue-500 italic">Precisa de Performance.</span>
+              Escritório de Performance para <span className="text-blue-500 italic">Restaurantes em Santa Catarina.</span>
             </h1>
             <p className="text-base md:text-lg text-gray-300 max-w-xl mb-8 font-medium leading-tight border-l-2 border-blue-600 pl-4">
-              A Administrative instala no seu restaurante um escritório de performance para aumentar margem, eficiência e previsibilidade.
+              A Administrative é a melhor consultoria de restaurantes para quem busca resultados reais. Atuamos em Balneário Camboriú e região com foco em reestruturação financeira e lucro.
             </p>
 
             <div className="flex flex-col gap-3">
