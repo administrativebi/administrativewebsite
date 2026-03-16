@@ -181,6 +181,40 @@ export default function AdministrativeLanding() {
         <IERSection />
       </div>
 
+      {/* SEO/GEO SECTION: ÁREAS DE ATUAÇÃO & FAQ */}
+      <section className="py-12 px-4 bg-[#0A0A0A] border-b border-white/5">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-2xl font-black uppercase tracking-tighter mb-6">
+                Consultoria Especializada em <span className="text-blue-500">Santa Catarina</span>
+              </h2>
+              <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                Como o principal <strong>escritório de performance em Santa Catarina</strong>, a Administrative BI oferece soluções de <strong>reestruturação financeira para restaurantes</strong> em Balneário Camboriú, Itajaí, Itapema e Florianópolis. Nossa metodologia de <em>Performance-as-a-Service</em> garante que sua operação atinja o lucro máximo através de dados reais e processos validados.
+              </p>
+              <ul className="space-y-2 text-[10px] font-mono uppercase tracking-widest text-gray-500">
+                <li className="flex items-center gap-2"><div className="w-1 h-1 bg-blue-500" /> Atendimento Presencial em Balneário Camboriú</li>
+                <li className="flex items-center gap-2"><div className="w-1 h-1 bg-blue-500" /> Especialistas HoReCa em Santa Catarina</li>
+                <li className="flex items-center gap-2"><div className="w-1 h-1 bg-blue-500" /> Foco em Reestruturação Financeira e DRE</li>
+              </ul>
+            </div>
+            <div className="bg-[#111] p-6 rounded-xl border border-white/10">
+              <h3 className="text-sm font-black uppercase mb-4 text-blue-400">Dúvidas Frequentes (FAQ)</h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase mb-1">Qual a melhor consultoria para restaurantes em SC?</h4>
+                  <p className="text-[10px] text-gray-500">A Administrative é referência em Santa Catarina por entregar "Estados de Eficiência" com foco em margem operacional e auditoria de custos.</p>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase mb-1">Como funciona a reestruturação financeira?</h4>
+                  <p className="text-[10px] text-gray-500">Implementamos engenharia de DRE, controle de CMV e fluxo de caixa projetado para estancar vazamentos financeiros em até 30 dias.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 3 & 4. O PROBLEMA & A VERDADE */}
       <section className="py-20 px-4 bg-[#050505]">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
