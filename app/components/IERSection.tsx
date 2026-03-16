@@ -9,81 +9,81 @@ const QUESTIONS_DATA = [
   { 
     dim: 'Gestão Financeira', 
     questions: [
-      'Existe DRE estruturada e mensal?',
-      'Fluxo de caixa é acompanhado diariamente?',
-      'Existe meta de lucratividade líquida definida?',
-      'Contas a pagar e receber são conciliadas diariamente?',
-      'Existe separação total entre conta física e jurídica?'
+      'Existe DRE estruturada?',
+      'A DRE é analisada mensalmente?',
+      'Existe controle de fluxo de caixa projetado?',
+      'Existe orçamento ou meta financeira?',
+      'Existe análise de lucratividade do negócio?'
     ] 
   },
   { 
     dim: 'Controle de Custos', 
     questions: [
-      'CMV é calculado regularmente com base em inventário?',
-      'Fichas técnicas estão atualizadas e são seguidas?',
-      'Existe controle de desperdício e quebras registrado?',
-      'Compras são feitas com base em cotações e PVPS?',
-      'Margem de contribuição por produto é conhecida?'
+      'CMV é calculado regularmente?',
+      'Existe ficha técnica completa dos pratos?',
+      'Existe inventário periódico?',
+      'Existe controle de desperdício?',
+      'Existe análise de margem por prato?'
     ] 
   },
   { 
     dim: 'Processos Operacionais', 
     questions: [
-      'Existe padrão (POP) de abertura e fechamento?',
-      'Checklists operacionais são aplicados e auditados?',
-      'O fluxo de produção da cozinha é otimizado (Lean)?',
-      'Existe padrão de recebimento de mercadorias?',
-      'A manutenção preventiva de equipamentos é realizada?'
+      'Existe padrão de abertura e fechamento?',
+      'Existe padrão de montagem dos pratos?',
+      'Existe controle de tempo de preparo?',
+      'Existe checklists operacionais?',
+      'Existe controle de qualidade da produção?'
     ] 
   },
   { 
     dim: 'Gestão de Pessoas', 
     questions: [
-      'Existe treinamento estruturado para novos colaboradores?',
-      'As funções e responsabilidades estão documentadas (Job Description)?',
-      'Existe feedback formal e rotina de alinhamento com a equipe?',
-      'O turnover da operação é medido e controlado?',
-      'Existe política de incentivos baseada em metas?'
+      'Existe treinamento estruturado?',
+      'Existe avaliação de desempenho?',
+      'Existe definição clara de funções?',
+      'Existe rotina de reunião com equipe?',
+      'Existe plano de metas para equipe?'
     ] 
   },
   { 
     dim: 'Gestão Comercial', 
     questions: [
-      'O ticket médio é acompanhado e existem metas de aumento?',
-      'Existe estratégia de engenharia de cardápio (Menu Engineering)?',
-      'As campanhas de marketing são medidas por ROI real?',
-      'Existe base de clientes (CRM) para ações de fidelização?',
-      'A presença digital (Google/Redes) é gerida estrategicamente?'
+      'Ticket médio é acompanhado?',
+      'Giro de mesas é analisado?',
+      'Ranking de pratos vendidos é acompanhado?',
+      'Existe estratégia de vendas ativa?',
+      'Existe gestão de canais (delivery, salão etc.)?'
     ] 
   },
   { 
     dim: 'Experiência do Cliente', 
     questions: [
-      'Existe um padrão de atendimento (script/etapas) definido?',
-      'O tempo de espera/entrega é monitorado constantemente?',
-      'Existe pesquisa de satisfação (NPS ou similar) ativa?',
-      'O ambiente (limpeza, som, luz) é auditado regularmente?',
-      'Existe protocolo de resolução de reclamações em tempo real?'
+      'Existe padrão de atendimento?',
+      'Existe acompanhamento de avaliações online?',
+      'Existe gestão de reclamações?',
+      'Existe padrão de tempo de atendimento?',
+      'Existe estratégia de fidelização?'
     ] 
   },
   { 
     dim: 'Inteligência de Dados', 
     questions: [
-      'Existe dashboard ou BI para acompanhamento de KPIs?',
-      'Os indicadores de performance (vendas, custos, pessoas) são cruzados?',
-      'Existe análise de concorrência e benchmark de mercado?',
-      'Decisões de investimento são baseadas em dados históricos?',
-      'O estoque é gerido por sistema integrado (ERP) संतुलित?'
+      'Existe dashboard ou BI?',
+      'Indicadores são revisados regularmente?',
+      'Existe análise de tendências de vendas?',
+      'Existe acompanhamento de metas?',
+      'Decisões são tomadas com base em dados?'
     ] 
   },
   { 
-    dim: 'Liderança', 
+    dim: 'Liderança e Gestão do Dono', 
     questions: [
-      'O dono possui rotina de gestão semanal fora da operação?',
-      'Existem rituais de cultura e valores com toda a equipe?',
-      'O plano estratégico do negócio é revisado trimestralmente?',
-      'A sucessão ou delegabilidade operacional está em construção?',
-      'O líder foca mais em estratégia do que em "apagar incêndios"?'
+      'O dono possui rotina de gestão semanal?',
+      'Existe planejamento estratégico anual?',
+      'O dono delega responsabilidades?',
+      'Existe acompanhamento de metas mensais?',
+      'Existe revisão periódica da operação?'
     ] 
   }
 ];
