@@ -133,9 +133,9 @@ export default function AdministrativeLanding() {
       <section className="relative min-h-[90vh] flex items-center justify-start px-4 md:px-16 overflow-hidden border-b border-white/5 pb-20">
         <div className="absolute inset-0 z-0">
           <picture>
-            <source media="(max-width: 767px)" srcSet={ASSETS.HERO_MOBILE} />
+            <source media="(max-width: 767px)" srcSet={`${ASSETS.HERO_MOBILE}?v=1.2`} />
             <img
-              src={ASSETS.HERO_DESKTOP}
+              src={`${ASSETS.HERO_DESKTOP}?v=1.2`}
               alt="Administrative Background"
               className="absolute inset-0 w-full h-full object-cover opacity-30 grayscale"
             />
