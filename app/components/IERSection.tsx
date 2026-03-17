@@ -147,9 +147,22 @@ export default function IERSection() {
     const totalPoints = answers.reduce((acc, val) => acc + (val >= 0 ? val : 0), 0);
     return Math.round((totalPoints / 80) * 100);
   };
+const calculateUserDimensions = () => {
+  return QUESTIONS_DATA.map((dimData, dimIdx) => {
+    const start = dimIdx * 5;
+    const dimAnswers = answers.slice(start, start + 5);
+    const points = dimAnswers.reduce((acc, val) => acc + (val >= 0 ? val : 0), 0);
+    return {
+      name: dimData.dim,
+      score: Math.round((points / 10) * 100)
+    };
+  });
+};
 
-  const handleNext = async () => {
-    if (currentDimIndex === -1) {
+const handleNext = async () => {
+  if (currentDimIndex === -1) {
+// ...
+
       if (!restaurantName || !restaurantCity) return;
       setCurrentDimIndex(0);
       return;
@@ -419,26 +432,73 @@ export default function IERSection() {
               {/* VIEW: REPORT */}
               {viewState === 'report' && (
                 <div className="text-left py-2 flex flex-col flex-1">
-                  <div className="flex items-center gap-4 mb-6">
-                    <ShieldCheck className="w-12 h-12 text-blue-500 drop-shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
-                    <div>
-                      <span className="text-blue-500 font-mono text-sm uppercase tracking-widest block">Diagnóstico Concluído</span>
-                      <h3 className="text-3xl font-black text-white uppercase tracking-tighter">
-                        Score: <span className="text-blue-500">{calculateUserScore()}</span> / 100
-                      </h3>
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+                    <div className="flex items-center gap-4">
+                      <ShieldCheck className="w-12 h-12 text-blue-500 drop-shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+                      <div>
+                        <span className="text-blue-500 font-mono text-xs uppercase tracking-widest block">Diagnóstico Concluído</span>
+                        <h3 className="text-3xl font-black text-white uppercase tracking-tighter">
+                          Score: <span className="text-blue-500">{calculateUserScore()}</span> / 100
+                        </h3>
+                      </div>
+                    </div>
+                    
+                    <a
+                      href={`https://wa.me/5547999255801?text=Olá! Acabei de realizar o diagnóstico IER para o restaurante ${restaurantName} e meu score foi ${calculateUserScore()}/100. Gostaria de falar com um especialista.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3 bg-green-600 hover:bg-green-500 text-white rounded font-black text-xs uppercase tracking-widest transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(34,197,94,0.3)] animate-bounce-subtle"
+                    >
+                      Falar com um Especialista
+                    </a>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 overflow-y-auto flex-1 scrollbar-hide">
+                    {/* User Dimensions Chart */}
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                      <h4 className="text-xs font-mono uppercase tracking-widest text-gray-400 mb-6 flex items-center gap-2">
+                        <BarChart3 className="w-4 h-4 text-blue-500" /> Seu Mapa de Performance Real
+                      </h4>
+                      <div className="space-y-4">
+                        {calculateUserDimensions().map((dim, idx) => (
+                          <div key={dim.name}>
+                            <div className="flex justify-between text-[10px] font-bold uppercase mb-1">
+                              <span className="text-gray-300">{dim.name}</span>
+                              <span className={dim.score < 50 ? 'text-red-400' : 'text-blue-400'}>{dim.score}%</span>
+                            </div>
+                            <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${dim.score}%` }}
+                                transition={{ duration: 1, delay: idx * 0.1 }}
+                                className={`h-full rounded-full ${dim.score < 50 ? 'bg-red-500' : 'bg-blue-500'}`}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Report Text Content */}
+                    <div className="bg-[#111] border border-white/10 rounded-xl p-6 prose prose-invert prose-blue max-w-none prose-xs overflow-y-auto">
+                      <ReactMarkdown>{reportText || ''}</ReactMarkdown>
                     </div>
                   </div>
 
-                  <div className="w-full bg-[#111] border border-white/10 rounded-xl p-8 mb-8 overflow-y-auto flex-1 prose prose-invert prose-blue max-w-none">
-                    <ReactMarkdown>{reportText || ''}</ReactMarkdown>
+                  <div className="flex flex-col md:flex-row gap-3">
+                    <button
+                      onClick={() => setViewState('chat')}
+                      className="flex-1 py-4 bg-white/10 hover:bg-white/20 text-white font-black uppercase text-xs rounded-md transition-all flex justify-center items-center gap-2 border border-white/10"
+                    >
+                      Acessar Brain AI <ArrowRight className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setIsQuizOpen(false)}
+                      className="px-8 py-4 bg-transparent border border-white/5 text-gray-500 hover:text-white font-black uppercase text-xs rounded-md transition-all"
+                    >
+                      Fechar
+                    </button>
                   </div>
-
-                  <button
-                    onClick={() => setViewState('chat')}
-                    className="w-full py-4 bg-white hover:bg-gray-200 text-black font-black uppercase text-sm rounded-md transition-all flex justify-center items-center gap-2"
-                  >
-                    Acessar Análise Dinâmica <ArrowRight className="w-4 h-4" />
-                  </button>
                 </div>
               )}
 

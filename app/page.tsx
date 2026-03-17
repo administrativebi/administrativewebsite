@@ -120,12 +120,14 @@ export default function AdministrativeLanding() {
             <a href="#metodologia" className="hover:text-blue-500 transition-colors">Metodologia</a>
             <a href="#solucao" className="hover:text-blue-500 transition-colors">Solução</a>
           </div>
-          <button
-            onClick={() => handleCTA('navbar-cta', 'navbar')}
+          <a
+            href="https://wa.me/5547999255801"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold uppercase rounded transition-all"
           >
-            Diagnóstico
-          </button>
+            Fale com um consultor
+          </a>
         </div>
       </nav>
 
@@ -158,7 +160,7 @@ export default function AdministrativeLanding() {
               Escritório de Performance para <span className="text-blue-500 italic">Restaurantes em Santa Catarina.</span>
             </h1>
             <p className="text-base md:text-lg text-gray-300 max-w-xl mb-8 font-medium leading-tight border-l-2 border-blue-600 pl-4">
-              A Administrative é a melhor consultoria de restaurantes para quem busca resultados reais. Atuamos em Balneário Camboriú e região com foco em reestruturação financeira e lucro.
+              Consultoria com metodologia de performance única, que foca na gestão de como você faz, e trabalha para melhorar a performance de processos, pessoas e negócio. O resultado é consequência natural destas ações.
             </p>
 
             <div className="flex flex-col gap-3">
@@ -193,21 +195,21 @@ export default function AdministrativeLanding() {
                 Como o principal <strong>escritório de performance em Santa Catarina</strong>, a Administrative BI oferece soluções de <strong>reestruturação financeira para restaurantes</strong> em Balneário Camboriú, Itajaí, Itapema e Florianópolis. Nossa metodologia de <em>Performance-as-a-Service</em> garante que sua operação atinja o lucro máximo através de dados reais e processos validados.
               </p>
               <ul className="space-y-2 text-[10px] font-mono uppercase tracking-widest text-gray-500">
-                <li className="flex items-center gap-2"><div className="w-1 h-1 bg-blue-500" /> Atendimento Presencial em Balneário Camboriú</li>
-                <li className="flex items-center gap-2"><div className="w-1 h-1 bg-blue-500" /> Especialistas HoReCa em Santa Catarina</li>
-                <li className="flex items-center gap-2"><div className="w-1 h-1 bg-blue-500" /> Foco em Reestruturação Financeira e DRE</li>
+                <li className="flex items-center gap-2"><div className="w-1 h-1 bg-blue-500" /> Atendimento Presencial em SC</li>
+                <li className="flex items-center gap-2"><div className="w-1 h-1 bg-blue-500" /> Consultores de performance com ampla experiência em gastronomia</li>
+                <li className="flex items-center gap-2"><div className="w-1 h-1 bg-blue-500" /> Foco em estruturação de cultura de performance</li>
               </ul>
             </div>
             <div className="bg-[#111] p-6 rounded-xl border border-white/10">
               <h3 className="text-sm font-black uppercase mb-4 text-blue-400">Dúvidas Frequentes (FAQ)</h3>
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase mb-1">Qual a melhor consultoria para restaurantes em SC?</h4>
-                  <p className="text-[10px] text-gray-500">A Administrative é referência em Santa Catarina por entregar "Estados de Eficiência" com foco em margem operacional e auditoria de custos.</p>
+                  <h4 className="text-xs font-bold text-white uppercase mb-1">Qual a metodologia de performance da Administrative?</h4>
+                  <p className="text-[10px] text-gray-500">Trabalhamos para melhorar a performance de processos, pessoas e negócio. O resultado financeiro é a consequência natural da gestão de como as coisas são feitas.</p>
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase mb-1">Como funciona a reestruturação financeira?</h4>
-                  <p className="text-[10px] text-gray-500">Implementamos engenharia de DRE, controle de CMV e fluxo de caixa projetado para estancar vazamentos financeiros em até 30 dias.</p>
+                  <h4 className="text-xs font-bold text-white uppercase mb-1">Como funciona a implantação de uma cultura de performance?</h4>
+                  <p className="text-[10px] text-gray-500">Implantamos utilizando tecnologia que analisa como seu restaurante está funcionando, com a implantação de um cérebro artificial que fica analisando o restaurante 24 horas por dia.</p>
                 </div>
               </div>
             </div>
